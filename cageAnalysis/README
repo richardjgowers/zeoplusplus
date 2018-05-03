@@ -1,0 +1,88 @@
+—— HOW TO RUN SMA IN UNIX BASED SYSTEMS ——
+
+PREREQUISITES
+
+Requisites: 
+To work properly, the software requires an installation of CGAL into the computer. CGAL installation can be done manually or through repositories.
+
+CGAL Download:
+
+http://www.cgal.org/download/linux.html
+
+CGAL Installation:
+
+http://doc.cgal.org/latest/Manual/installation.html
+
+Linking CGAL:
+
+Use the following command to make CGAL accessible from any program:
+
+export LD_LIBRARY_PATH=“/usr/local/lib”
+
+COMPILATION
+
+Compilation of the software can be done with the included makefiles.
+
+First, enter the voro++ folder, and execute:
+
+make clean & make
+
+Then, go to the main folder, and execute:
+
+make
+
+If CGAL has been properly linked, compilation should run successfully.
+
+EXECUTION
+
+The program currently accepts three file formats and several execution modes.
+
+Input file formats:
+
+.mol - Performs the analysis (partial or complete) over the given molecule.
+.frameid - Non-standard format to describe molecular sets. Extracts the first molecule of the list and prints it in .mol format.
+.sdf - Performs analysis over all molecules included in file.
+
+Execution:
+
+To run the program, type:
+
+./single_mol_analysis [options] Filename
+
+Filename - File containing the molecule/s 3d description. 
+
+Basic run will compute three first descriptors for all the molecules provided. 
+
+Options:
+
+-w	Compute windows with help of alpha shape. Generates all the extra descriptors (see below).
+-p	Print several output files with details about: pruning process, voronoi network, internal cells, and windows (if this option was chosen).
+-e	Exploratory mode: faster test to decide whether a molecule could be a cage. If passed, descriptors will be computed (otherwise, output will be 0 for all of them).
+-np	Avoid pruning of hanging atoms before computing.
+-olt	Overlap test: check if any pair of molecules from the ones provided as input overlap each other. SDF only.
+-iep	Internal/external points: requires extra argument (name of file with points in 3d coordinates, global) just after the flag. Checks if the points given are inside provided molecule.
+
+
+
+OUTPUT
+
+Text output:
+
+Output is presented regarding the mode selected by the user. Each parameter is presented after its corresponding character code. All information is presented in only one line.
+
+- Maximum internal sphere (MIS)
+- Total accessible volume (TIV)
+- Total convex hull volume (CHV)
+- Number of windows - chemical (NW)*
+- Number of entry paths (NEP)*
+- Total computed surface (TCP)*
+- Maximum accessible size (IAS)*
+
+* - Shown only if -w option is chosen.
+
+Visualization:
+
+If -p flag is chosen, files for visualisation will be created. Output format is VTK and can be visualised with VisIt [https://wci.llnl.gov/simulation/computer-codes/visit/downloads]. Output files will be stored in a folder with the same name as the molecule (if SDF format) or in a folder named Molecule otherwise. This new folder will be created at Molecules_Output folder (provided with the code).  
+
+
+
